@@ -1,9 +1,9 @@
-import cv2
+import cv2 as cv
 import numpy as np
 import pygame
 
 # Initialize the camera (change the camera index if needed)
-cap = cv2.VideoCapture(0)  # 0 corresponds to the default camera, you can adjust it based on your setup
+cap = cv.VideoCapture(0)  # 0 corresponds to the default camera, you can adjust it based on your setup
 
 # Check if the camera is opened successfully
 if not cap.isOpened():
@@ -39,23 +39,23 @@ CAM_FLIP_FLAG = 0  # Tracks whether the camera is flipped incorrectly.
 def fix_cam_orientation(cam_frame, rotate_flag, flip_flag):
     # The camera is incorrectly rotated 90 deg clockwise
     if rotate_flag == 1:
-        cam_frame = cv2.rotate(cam_frame, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        cam_frame = cv.rotate(cam_frame, cv.ROTATE_90_COUNTERCLOCKWISE)
     # The camera is incorrectly rotated 90 deg counterclockwise
     elif rotate_flag == 2:
-        cam_frame = cv2.rotate(cam_frame, cv2.ROTATE_90_CLOCKWISE)
+        cam_frame = cv.rotate(cam_frame, cv.ROTATE_90_CLOCKWISE)
     # The camera is incorrectly rotated 180 deg
     elif rotate_flag == 3:
-        cam_frame = cv2.rotate(cam_frame, cv2.ROTATE_180)
+        cam_frame = cv.rotate(cam_frame, cv.ROTATE_180)
 
     # The camera is incorrectly horizontally flipped
     if flip_flag == 1:
-        cam_frame = cv2.flip(cam_frame, 0)
+        cam_frame = cv.flip(cam_frame, 0)
     # The camera is incorrectly vertically flipped.
     elif flip_flag == 2:
-        cam_frame = cv2.flip(cam_frame, 1)
+        cam_frame = cv.flip(cam_frame, 1)
     # The camera is incorrectly horizontally & vertically flipped.
     elif flip_flag == 3:
-        cam_frame = cv2.flip(cam_frame, -1)
+        cam_frame = cv.flip(cam_frame, -1)
 
     return cam_frame
 
@@ -93,7 +93,7 @@ while run_while_loop:
     frame = fix_cam_orientation(frame, CAM_ROTATION_FLAG, CAM_FLIP_FLAG)
 
     # Convert the OpenCV frame to Pygame surface
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    frame = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
     pygame_frame = pygame.surfarray.make_surface(frame)
 
     # Draw the camera frame onto the Pygame surface
@@ -140,4 +140,4 @@ while run_while_loop:
 
 # Release the camera and close all windows
 cap.release()
-cv2.destroyAllWindows()
+cv.destroyAllWindows()
