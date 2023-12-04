@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 import pygame
+from hand_detection import HandDetector
 
 # Initialize the camera (change the camera index if needed)
 cap = cv.VideoCapture(0)  # 0 corresponds to the default camera, you can adjust it based on your setup
