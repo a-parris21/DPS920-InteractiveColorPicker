@@ -14,10 +14,16 @@ if not cap.isOpened():
 # Initialize Pygame
 pygame.init()
 
+# Define colors for palette and <clear> button
+PALETTE_COLORS = [(255, 0, 0), (255, 255, 0), (0, 255, 0), (0, 0, 255)]  # Red, Yellow, Green, Blue
 CLEAR_BTN_COLOR = (240, 240, 240)
 
-# Define colors in your palette
-colors = [(255, 0, 0), (255, 255, 0), (0, 255, 0), (0, 0, 255)]  # Red, Yellow, Green, Blue
+# Define bounding boxes (as tuples) for colour buttons and clear button.
+palette_bboxes = []
+for i in range(len(PALETTE_COLORS)):
+    palette_bboxes.append((i * 100, 0, 100, 50))
+
+clear_btn_bbox = (550, 50, 80, 40)
 
 # Initialize the active color
 active_color = None
@@ -71,7 +77,7 @@ def update_active_color(new_color):
     global active_color
 
     if (new_color >= 0) and (new_color <= 3):
-        active_color = colors[new_color]
+        active_color = PALETTE_COLORS[new_color]
     else:
         active_color = None
     return 0
@@ -101,11 +107,11 @@ while run_while_loop:
     screen.blit(pygame_frame, (0, 0))
 
     # Draw the color palette
-    for i, color in enumerate(colors):
-        pygame.draw.rect(screen, color, (i * 100, 0, 100, 50))
+    for i, color in enumerate(PALETTE_COLORS):
+        pygame.draw.rect(screen, color, palette_bboxes[i])
 
     # Draw the CLEAR button
-    clear_button_rect = pygame.draw.rect(screen, CLEAR_BTN_COLOR, (550, 50, 80, 40))
+    clear_button_rect = pygame.draw.rect(screen, CLEAR_BTN_COLOR, clear_btn_bbox)
     clear_button_text = font.render("CLEAR", True, (0, 0, 0))
     text_rect = clear_button_text.get_rect()
     text_rect.center = clear_button_rect.center
